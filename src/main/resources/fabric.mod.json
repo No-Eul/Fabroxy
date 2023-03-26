@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "fabroxy",
+	"version": "${version}",
+	"name": "Fabroxy",
+	"description": "The Fabric mod for forwarding to Minecraft server proxy like Velocity",
+	"authors": ["NoEul"],
+	"contact": {
+		"email": "me@NoEul.dev",
+		"sources": "https://github.com/No-Eul/Fabroxy",
+		"issues": "https://github.com/No-Eul/Fabroxy/issues",
+		"homepage": "https://modrinth.com/mod/fabroxy"
+	},
+	"license": "MIT",
+	"icon": "assets/fabroxy/icon.png",
+	"environment": "server",
+	"entrypoints": {
+		"server": ["dev.noeul.fabricmod.fabroxy.Fabroxy"]
+	},
+	"mixins": ["fabroxy.mixins.json"],
+	"accessWidener": "fabroxy.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.14.14",
+		"minecraft": "1.19.3",
+		"fabric": ">=0.75.1"
+	}
+}

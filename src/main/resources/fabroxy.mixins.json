@@ -1,0 +1,10 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "dev.noeul.fabricmod.fabroxy.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"server": ["ClientConnectionAccessor", "ServerLoginNetworkHandlerMixin", "ServerPlayerEntityMixin"],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
