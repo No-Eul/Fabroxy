@@ -26,9 +26,9 @@ dependencies {
 //	modImplementation("com.terraformersmc:modmenu:${property("mod_menu_version")}")
 
 	modRuntimeOnly("maven.modrinth:lazydfu:0.1.3")
-	modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.19-1.7.1")
+	modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.19.4-1.7.0")
 	modRuntimeOnly("maven.modrinth:mixintrace:1.1.1+1.17")
-	modRuntimeOnly("maven.modrinth:notenoughcrashes:4.2.0+1.19.3-fabric")
+	modRuntimeOnly("maven.modrinth:notenoughcrashes:4.4.0+1.19.3-fabric")
 }
 
 loom {
@@ -36,6 +36,7 @@ loom {
 			.find { file -> file.name.endsWith(".accesswidener") }
 			.let(accessWidenerPath::set)
 
+	@Suppress("UnstableApiUsage")
 	mixin {
 		defaultRefmapName.set("fabroxy.refmap.json")
 	}
@@ -49,7 +50,7 @@ loom {
 					Scanner(file(".gradle/loom-cache/remapClasspath.txt"), StandardCharsets.UTF_8).let {
 						it.useDelimiter(File.pathSeparator)
 						while (it.hasNext()) {
-							var next = it.next()
+							val next = it.next()
 							if (next.contains("net.fabricmc${File.separator}sponge-mixin")) {
 								it.close()
 								return@let next

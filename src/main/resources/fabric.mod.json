@@ -21,7 +21,7 @@
 	"accessWidener": "fabroxy.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.14.14",
-		"minecraft": "1.19.3",
+		"minecraft": "1.19.x",
 		"fabric": ">=0.75.1"
 	}
 }
