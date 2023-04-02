@@ -32,10 +32,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class ServerLoginNetworkHandlerMixin {
 	private int velocityLoginMessageId = -1; // Paper - Velocity support
 
-	@Shadow private static @Final Logger LOGGER;
-	@Shadow public @Final ClientConnection connection;
-	@Shadow private @Nullable GameProfile profile;
-	@Shadow private ServerLoginNetworkHandler.State state;
+	@Shadow static @Final Logger LOGGER;
+	@Shadow @Final ClientConnection connection;
+	@Shadow @Nullable GameProfile profile;
+	@Shadow ServerLoginNetworkHandler.State state;
 
 	@Shadow public abstract void disconnect(Text reason);
 
