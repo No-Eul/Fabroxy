@@ -66,11 +66,13 @@ public abstract class ServerLoginNetworkHandlerMixin {
 			if (buf == null) {
 				this.disconnect(Text.of("This server requires you to connect with Velocity."));
 				callbackInfo.cancel();
+				return;
 			}
-			assert buf != null;
+
 			if (!VelocityProxy.checkIntegrity(buf)) {
 				this.disconnect(Text.of("Unable to verify player details"));
 				callbackInfo.cancel();
+				return;
 			}
 
 			int version = buf.readVarInt();
@@ -86,6 +88,7 @@ public abstract class ServerLoginNetworkHandlerMixin {
 			if (this.velocityLoginMessageId == -1 && Fabroxy.config.enabled) {
 				this.disconnect(Text.of("This server requires you to connect with Velocity."));
 				callbackInfo.cancel();
+				return;
 			}
 
 			ServerLoginNetworkHandlerMixin.LOGGER.info("UUID of player {} is {}", this.profile.getName(), this.profile.getId());
