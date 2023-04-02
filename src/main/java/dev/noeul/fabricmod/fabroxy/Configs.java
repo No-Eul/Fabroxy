@@ -15,6 +15,7 @@ public class Configs {
 	public boolean enabled = false;
 //	public boolean onlineMode = false;
 	public String secretKey = "";
+	public boolean allowDirectConnection = false;
 
 	public File getFile() {
 		return CONFIG_FILE;
@@ -59,6 +60,10 @@ public class Configs {
 			if (jsonObject.get("secret") instanceof JsonPrimitive jsonPrimitive && jsonPrimitive.isString())
 				this.secretKey = jsonPrimitive.getAsString();
 			else Fabroxy.logger.warn("Cannot set the value '{}' of the config file '{}': Not a valid JSON string value", "secret", this.getFile());
+
+			if (jsonObject.get("direct_connection") instanceof JsonPrimitive jsonPrimitive && jsonPrimitive.isBoolean()) {
+				this.allowDirectConnection = jsonPrimitive.getAsBoolean();
+			} else Fabroxy.logger.warn("Cannot set the value '{}' of the config file '{}': Not a valid JSON boolean value", "direct_connection", this.getFile());
 		} else Fabroxy.logger.warn("Cannot set values of the config file '{}': Not a valid JSON object value", this.getFile());
 	}
 
@@ -67,6 +72,7 @@ public class Configs {
 		jsonObject.addProperty("enabled", this.enabled);
 //		jsonObject.addProperty("online_mode", this.onlineMode);
 		jsonObject.addProperty("secret", this.secretKey);
+		jsonObject.addProperty("direct_connection", this.allowDirectConnection);
 		return jsonObject;
 	}
 }

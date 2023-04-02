@@ -10,7 +10,9 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.network.packet.c2s.login.LoginQueryResponseC2SPacket;
+import net.minecraft.network.packet.s2c.login.LoginHelloS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginQueryRequestS2CPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -39,6 +41,10 @@ public abstract class ServerLoginNetworkHandlerMixin {
 
 	@Shadow public abstract void disconnect(Text reason);
 
+	@Shadow @Final MinecraftServer server;
+
+	@Shadow @Final private byte[] nonce;
+
 	@Inject(
 			method = "onHello",
 			at = @At(
@@ -64,7 +70,10 @@ public abstract class ServerLoginNetworkHandlerMixin {
 		if (Fabroxy.config.enabled && packet.getQueryId() == this.velocityLoginMessageId) {
 			PacketByteBuf buf = packet.getResponse();
 			if (buf == null) {
-				this.disconnect(Text.of("This server requires you to connect with Velocity."));
+				if (Fabroxy.config.allowDirectConnection) {
+					this.state = ServerLoginNetworkHandler.State.KEY;
+					this.connection.send(new LoginHelloS2CPacket("", this.server.getKeyPair().getPublic().getEncoded(), this.nonce));
+				} else this.disconnect(Text.of("This server requires you to connect with Velocity."));
 				callbackInfo.cancel();
 				return;
 			}
